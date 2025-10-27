@@ -1,39 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nebula HTML Encryptor</title>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="flex flex-col items-center justify-center p-6 relative">
-
-  <!-- Nebula floating effects -->
-  <div class="nebula-particle" style="width:150px;height:150px;top:10%;left:10%;background:#7e22ce;animation-delay:0s;"></div>
-  <div class="nebula-particle" style="width:200px;height:200px;bottom:15%;right:5%;background:#a855f7;animation-delay:3s;"></div>
-  <div class="nebula-particle" style="width:120px;height:120px;bottom:30%;left:30%;background:#9333ea;animation-delay:5s;"></div>
-
-  <div class="z-10 w-full max-w-3xl text-center space-y-6">
-    <h1 class="text-4xl font-bold nebula-glow mb-6">🔐 Nebula HTML Encryptor</h1>
-
-    <textarea id="input" rows="8" placeholder="Tempelkan kode HTML kamu di sini..."></textarea>
-
-    <button onclick="encryptHTML()">Encrypt HTML</button>
-
-    <textarea id="output" rows="8" readonly placeholder="Hasil terenkripsi akan muncul di sini..."></textarea>
-
-    <button onclick="copyOutput()">Salin Hasil</button>
-
-    <p class="footer">✨ Dibuat oleh <span class="text-purple-400">HanzzOffc</span> — Tema Nebula</p>
+<body>
+  <div class="nebula">
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
   </div>
 
-  <!-- Script -->
+  <main>
+    <h1>🔐 Nebula HTML Encryptor</h1>
+
+    <textarea id="input" placeholder="Tempelkan kode HTML kamu di sini..."></textarea>
+    <button id="encrypt-btn">Encrypt HTML</button>
+    <textarea id="output" placeholder="Hasil terenkripsi muncul di sini..." readonly></textarea>
+    <button id="copy-btn">Salin Hasil</button>
+
+    <footer>✨ Dibuat oleh <span class="author">HanzzOffc</span> — Tema Nebula</footer>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
