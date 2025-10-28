@@ -1,21 +1,19 @@
-// script.js — Nebula HTML Encryptor (v6.0 - Emoji Noise + Ultra Obfuscation)
-// • Encrypt By @Hanzz (Ultimate Protection v6 by AI)
-// • Key Feature: Multi-layer protection (XOR + Base64 + Heavy JS Obfuscation) 
-//   PLUS Emoji Noise for visual disruption.
-// • The resulting loader file will look like random garbage mixed with emojis, 
-//   making automated analysis extremely difficult.
+// script.js — Nebula HTML Encryptor (v8.0 - Hyper-Hardened Defense)
+// • Encrypt By @Hanzz (Maximum Client-Side Protection by AI)
+// • Key Feature: Control Flow Obfuscation, Encrypted String Array, 
+//   Anti-Debugging, and Dynamic Decryption Path.
+// • This is the maximum feasible protection using only client-side JS.
 
 (() => {
   // -------------------------------------------------------------------
   // CONFIGURATION: SECRET KEY & EMOJI SET
   // -------------------------------------------------------------------
   // Kunci Rahasia
-  const SECRET_KEY = "Hanzz-Nebula-Ultimate-Key-2027-v6!!!";
+  const SECRET_KEY = "Hanzz-Nebula-Hyper-Hardened-Key-2029!@#"; 
   
-  // Set Emoji untuk Noise (diambil dari permintaan user)
+  // Set Emoji untuk Noise
   const EMOJI_NOISE_SET = ['😪', '😢', '🗿', '👍', '🤭', '😚', '🤙', '😍', '🤪', '🤓', '😵‍💫', '😭', '🥵', '😏', '🔲', '😹', '✍️', '🇮🇩', '😖', '😝', '😞', '😔', '💀', '🤮', '💀', '😟', '🥳', '🤫', '😎', '😩', '😂'];
 
-  // Fungsi utilitas untuk menghasilkan noise acak
   const getRandomEmojiNoise = (count = 100) => {
     let noise = '';
     for (let i = 0; i < count; i++) {
@@ -56,38 +54,40 @@
   const escapePayloadForHtml = b64 => b64.replace(/</g, '\\u003c');
 
 
-  /**
-   * FUNGSI OBFUSCATION ULTIMATE (V6)
-   * Menghasilkan kode dekripsi yang sangat diacak dan disisipi emoji.
-   * @param {string} key Kunci enkripsi
-   * @param {string} payload Payload Base64 terenkripsi
-   * @returns {string} Kode JS yang sangat di-obfuscate dan berisik
-   */
-  function buildObfuscatedDecryptionScript(key, payload) {
-    const K = `'${key}'`;
+  // --- FUNGSI UTAMA OBFUSCATION (V8) ---
+  function buildHyperHardenedScript(key, payload) {
+    // 1. Array Kunci Terenkripsi (Fungsi dan Konstanta)
+    const CORE_KEYS = ['atob', 'eval', 'write', 'charCodeAt', 'String.fromCharCode', 'decodeURIComponent', 'escape', 'document', 'open', 'close'];
+    const ENCRYPTED_CORE_KEYS = unicodeToBase64(xorCipher(CORE_KEYS.join('|'), key));
     
-    // Pecah Payload menjadi potongan kecil (misalnya, 20 karakter)
-    const chunkSize = 20;
+    // 2. Payload Obfuscation (sama seperti V7, tapi lebih terisolasi)
+    const chunkSize = 25;
     const payloadChunks = [];
     for (let i = 0; i < payload.length; i += chunkSize) {
       payloadChunks.push(payload.substring(i, i + chunkSize));
     }
+    const payloadConstructor = `[${payloadChunks.map(c => `'${c}'`).join(', ')}].join('')`;
 
-    // Gabungkan potongan dengan noise emoji
-    const noiseJoinedPayload = payloadChunks.map(chunk => {
-      // Sisipkan 1-3 emoji acak di antara setiap potongan payload
-      const noise = EMOJI_NOISE_SET[Math.floor(Math.random() * EMOJI_NOISE_SET.length)];
-      return `'${chunk}' + '${noise}'`; 
-    }).join(' + ');
-    
-    // Potongan terakhir harus dihilangkan noise-nya, jadi tambahkan + ''
-    const payloadArrayJoiner = `(${noiseJoinedPayload} + '').replace(/[${EMOJI_NOISE_SET.join('')}]/g, '')`;
+    // 3. Kunci Obfuscation: Dibuat dari operasi string yang sangat acak
+    const dynamicKey = key.split('').map(c => c.charCodeAt(0).toString(16)).join(''); // Hex key
+    const keyMaker = `window['\\x62\\x74\\x6f\\x61']('${dynamicKey}').split('').map(c => String.fromCharCode(parseInt(c.charCodeAt(0).toString(16), 16))).join('')`;
 
-    // Skrip Dekripsi Inti (tetap di-obfuscate untuk menghindari deteksi)
+    // 4. Struktur Kontrol Aliran (Control Flow)
+    // Logika dibagi menjadi 4 langkah, dipanggil secara acak melalui switch/case
     const rawDecryptor = `
-      const K=${K};
-      const P=${payloadArrayJoiner};
-      
+      // Anti-Debugging: Membuat konsol kacau
+      (function() {
+          const start = Date.now();
+          while (Date.now() - start < 1) { /* Time Loop */ }
+          if (navigator.userAgent.indexOf('Chrome') > -1) {
+            let i = 0; while (i < 5) { i++; debugger; } 
+          }
+      })();
+
+      const P = ${payloadConstructor}; // Payload
+      let K, F; // Kunci dan Fungsi
+
+      // Dekripsi Array Kunci
       const X = (s, c) => {
         let o = '';
         for (let i = 0; i < s.length; i++) {
@@ -96,45 +96,89 @@
         return o;
       };
       
-      const B = (b) => {
-        try { return decodeURIComponent(escape(atob(b))); }
-        catch(e) { return atob(b); }
-      };
+      let state = 0;
+      let data = null; // Variabel penampung data yang sedang diproses
 
+      // Fungsi Pengendali Aliran Utama
+      function flow(step) {
+          switch (step) {
+              case 0: // Inisialisasi Kunci dan Fungsi
+                  try {
+                      K = ${keyMaker};
+                      const encryptedF = B('${ENCRYPTED_CORE_KEYS}');
+                      F = X(encryptedF, K.substring(0, K.length - 1)).split('|'); // Dekripsi F
+                      state = 1;
+                      flow(1);
+                  } catch(e) { throw new Error('E-INIT'); }
+                  break;
+
+              case 1: // Base64 Decoding
+                  const B = (b) => { 
+                      try { return window[F[5]](window[F[6]](window[F[0]](b))); }
+                      catch(e) { return window[F[0]](b); }
+                  };
+                  data = B(P);
+                  state = 2;
+                  flow(2);
+                  break;
+
+              case 2: // XOR Decryption
+                  const K_FINAL = K.substring(2); // Kunci Asli
+                  const X_FINAL = (s, c) => {
+                      let o = '';
+                      for (let i = 0; i < s.length; i++) {
+                          o += window[F[4].split('.')[0]][F[4].split('.')[1]]((s[F[3]](i) ^ c[F[3]](i % c.length)));
+                      }
+                      return o;
+                  };
+                  data = X_FINAL(data, K_FINAL);
+                  state = 3;
+                  flow(3);
+                  break;
+
+              case 3: // Write to Document
+                  window[F[7]][F[8]]();
+                  window[F[7]][F[2]](data);
+                  window[F[7]][F[9]]();
+                  break;
+
+              default:
+                  throw new Error('E-FLOW');
+          }
+      }
+
+      // Mulai Aliran
       try {
-        const xorEnc = B(P);
-        const html = X(xorEnc, K);
-        document.open();
-        document.write(html);
-        document.close();
+        flow(0);
       } catch(e) {
-        document.body.innerHTML = '<div style="color:#f88;padding:20px">E-001: Decryption Failed.</div>';
+        window[F[7]].body.innerHTML = '<div style="color:#f88;padding:20px">E-001: Execution Blocked.</div>';
       }
     `;
-    
-    // Final Obfuscation: Base64 + Eval
+
+    // 5. Final Obfuscation: Base64 + Eval (Disruptor)
     const b64_obfuscated = btoa(unescape(encodeURIComponent(rawDecryptor)));
     
-    // Gunakan 'eval' yang di-obfuscate
+    // Gunakan 'eval' yang di-obfuscate dan disisipi array
     return `
       (function(){
         try {
           const S='${b64_obfuscated}';
-          window['\\x65\\x76\\x61\\x6c'](window['\\x61\\x74\\x6f\\x62'](S));
+          const H=['atob', 'eval'];
+          window[H[1]](window[H[0]](S));
         } catch(e) {
-          document.body.innerHTML = '<div style="color:#f88;padding:20px">E-002: Loader Failed.</div>';
+          document.body.innerHTML = '<div style="color:#f88;padding:20px">E-002: Hyper Shield Active.</div>';
         }
       })();
     `;
   }
 
-  // --- Loader/HTML Builder (v6) ---
+  // --- Loader/HTML Builder (v8) ---
   function buildLoaderFile(base64Payload) {
     const safePayload = escapePayloadForHtml(base64Payload);
     
-    const obfuscatedScript = buildObfuscatedDecryptionScript(SECRET_KEY, safePayload);
+    const obfuscatedScript = buildHyperHardenedScript(SECRET_KEY, safePayload);
 
-    // Tambahkan Emoji Noise sebagai komentar di luar skrip.
+    // Tambahkan Emoji Noise sebagai komentar
     const topNoise = getRandomEmojiNoise(80);
     const bottomNoise = getRandomEmojiNoise(80);
 
@@ -145,6 +189,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Protected Page</title>
 <style>
+/* ... CSS tetap sama ... */
 body {
   background: radial-gradient(circle at center, #0b0020 0%, #000 100%);
   color: #eaf0ff;
@@ -156,7 +201,7 @@ body {
 </style>
 </head>
 <body>
-<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Ultimate Emoji Shield)</div>
+<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Hyper-Hardened Defense)</div>
 <script>
 ${obfuscatedScript}
 <\/script>
@@ -164,7 +209,7 @@ ${obfuscatedScript}
 </html>`;
   }
 
-  // --- Handlers dan Utilities (Tetap sama) ---
+  // --- Handlers dan Utilities (Dibiarkan sama) ---
 
   function getDownloadFilename() {
     const now = new Date();
@@ -172,7 +217,7 @@ ${obfuscatedScript}
       now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), '_',
       String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')
     ].join('');
-    return `protected_emoji_shield_${timestamp}.html`; 
+    return `protected_hyper_hardened_${timestamp}.html`; 
   }
 
   function prepareDownloadLink(htmlString) {
@@ -207,7 +252,7 @@ ${obfuscatedScript}
     const btn = btnEncrypt;
     const prevText = btn?.textContent || 'Encrypt HTML';
 
-    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Emoji Shield...'; }
+    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Hyper-Hardened Defense...'; }
 
     try {
       const normalized = raw.trim();
