@@ -1,17 +1,13 @@
-// script.js — Nebula HTML Encryptor (v8.0 - Hyper-Hardened Defense)
-// • Encrypt By @Hanzz (Maximum Client-Side Protection by AI)
-// • Key Feature: Control Flow Obfuscation, Encrypted String Array, 
-//   Anti-Debugging, and Dynamic Decryption Path.
-// • This is the maximum feasible protection using only client-side JS.
+// script.js — Nebula HTML Encryptor (v10.0 - Max Handlers Obfuscation)
+// • Encrypt By @Hanzz (Max Obfuscation by AI)
+// • Key Feature: Core obfuscation (V9) + numerous dummy event handlers and 
+//   listeners to increase complexity and hide core logic from static analysis.
 
 (() => {
   // -------------------------------------------------------------------
-  // CONFIGURATION: SECRET KEY & EMOJI SET
+  // KONFIGURASI INTI (DIBIARKAN SAMA)
   // -------------------------------------------------------------------
-  // Kunci Rahasia
-  const SECRET_KEY = "Hanzz-Nebula-Hyper-Hardened-Key-2029!@#"; 
-  
-  // Set Emoji untuk Noise
+  const SECRET_KEY = "Hanzz-Nebula-Max-Handler-Key-2031-v10!@#"; 
   const EMOJI_NOISE_SET = ['😪', '😢', '🗿', '👍', '🤭', '😚', '🤙', '😍', '🤪', '🤓', '😵‍💫', '😭', '🥵', '😏', '🔲', '😹', '✍️', '🇮🇩', '😖', '😝', '😞', '😔', '💀', '🤮', '💀', '😟', '🥳', '🤫', '😎', '😩', '😂'];
 
   const getRandomEmojiNoise = (count = 100) => {
@@ -22,8 +18,6 @@
     }
     return noise;
   };
-  // -------------------------------------------------------------------
-
 
   // --- DOM Element Selection ---
   const $ = id => document.getElementById(id);
@@ -36,7 +30,7 @@
   let downloadLink = $('downloadLink') || $('dl');
   let currentBlobUrl = null;
 
-  // --- Core Encryption Logic ---
+  // --- Core Encryption Logic (Dibiarkan sama) ---
   const xorCipher = (str, key) => {
     let output = '';
     for (let i = 0; i < str.length; i++) {
@@ -54,131 +48,81 @@
   const escapePayloadForHtml = b64 => b64.replace(/</g, '\\u003c');
 
 
-  // --- FUNGSI UTAMA OBFUSCATION (V8) ---
-  function buildHyperHardenedScript(key, payload) {
-    // 1. Array Kunci Terenkripsi (Fungsi dan Konstanta)
-    const CORE_KEYS = ['atob', 'eval', 'write', 'charCodeAt', 'String.fromCharCode', 'decodeURIComponent', 'escape', 'document', 'open', 'close'];
+  // --- FUNGSI OBFUSCATION STABIL (V9 Logic) ---
+  function buildStableDecryptionScript(key, payload) {
+    const CORE_KEYS = ['atob', 'eval', 'write', 'charCodeAt', 'String.fromCharCode', 'decodeURIComponent', 'escape', 'document', 'open', 'close', 'innerHTML', 'body'];
     const ENCRYPTED_CORE_KEYS = unicodeToBase64(xorCipher(CORE_KEYS.join('|'), key));
     
-    // 2. Payload Obfuscation (sama seperti V7, tapi lebih terisolasi)
-    const chunkSize = 25;
+    const chunkSize = 30;
     const payloadChunks = [];
     for (let i = 0; i < payload.length; i += chunkSize) {
       payloadChunks.push(payload.substring(i, i + chunkSize));
     }
     const payloadConstructor = `[${payloadChunks.map(c => `'${c}'`).join(', ')}].join('')`;
 
-    // 3. Kunci Obfuscation: Dibuat dari operasi string yang sangat acak
-    const dynamicKey = key.split('').map(c => c.charCodeAt(0).toString(16)).join(''); // Hex key
-    const keyMaker = `window['\\x62\\x74\\x6f\\x61']('${dynamicKey}').split('').map(c => String.fromCharCode(parseInt(c.charCodeAt(0).toString(16), 16))).join('')`;
+    const keyParts = key.split('-');
+    const keyMaker = `'${keyParts[0]}' + '-' + '${keyParts[1]}' + '-' + '${keyParts[2]}' + '-' + '${keyParts[3]}'`;
 
-    // 4. Struktur Kontrol Aliran (Control Flow)
-    // Logika dibagi menjadi 4 langkah, dipanggil secara acak melalui switch/case
     const rawDecryptor = `
-      // Anti-Debugging: Membuat konsol kacau
-      (function() {
-          const start = Date.now();
-          while (Date.now() - start < 1) { /* Time Loop */ }
-          if (navigator.userAgent.indexOf('Chrome') > -1) {
-            let i = 0; while (i < 5) { i++; debugger; } 
-          }
-      })();
+      const P = ${payloadConstructor}; 
+      const K = ${keyMaker}; 
+      let F; 
 
-      const P = ${payloadConstructor}; // Payload
-      let K, F; // Kunci dan Fungsi
-
-      // Dekripsi Array Kunci
       const X = (s, c) => {
         let o = '';
         for (let i = 0; i < s.length; i++) {
-          o += String.fromCharCode((s.charCodeAt(i) ^ c.charCodeAt(i % c.length)));
+          o += window['String']['fromCharCode']((s['charCodeAt'](i) ^ c['charCodeAt'](i % c.length)));
         }
         return o;
       };
-      
-      let state = 0;
-      let data = null; // Variabel penampung data yang sedang diproses
 
-      // Fungsi Pengendali Aliran Utama
-      function flow(step) {
-          switch (step) {
-              case 0: // Inisialisasi Kunci dan Fungsi
-                  try {
-                      K = ${keyMaker};
-                      const encryptedF = B('${ENCRYPTED_CORE_KEYS}');
-                      F = X(encryptedF, K.substring(0, K.length - 1)).split('|'); // Dekripsi F
-                      state = 1;
-                      flow(1);
-                  } catch(e) { throw new Error('E-INIT'); }
-                  break;
-
-              case 1: // Base64 Decoding
-                  const B = (b) => { 
-                      try { return window[F[5]](window[F[6]](window[F[0]](b))); }
-                      catch(e) { return window[F[0]](b); }
-                  };
-                  data = B(P);
-                  state = 2;
-                  flow(2);
-                  break;
-
-              case 2: // XOR Decryption
-                  const K_FINAL = K.substring(2); // Kunci Asli
-                  const X_FINAL = (s, c) => {
-                      let o = '';
-                      for (let i = 0; i < s.length; i++) {
-                          o += window[F[4].split('.')[0]][F[4].split('.')[1]]((s[F[3]](i) ^ c[F[3]](i % c.length)));
-                      }
-                      return o;
-                  };
-                  data = X_FINAL(data, K_FINAL);
-                  state = 3;
-                  flow(3);
-                  break;
-
-              case 3: // Write to Document
-                  window[F[7]][F[8]]();
-                  window[F[7]][F[2]](data);
-                  window[F[7]][F[9]]();
-                  break;
-
-              default:
-                  throw new Error('E-FLOW');
-          }
-      }
-
-      // Mulai Aliran
       try {
-        flow(0);
+          const encryptedF = B('${ENCRYPTED_CORE_KEYS}');
+          F = X(encryptedF, K).split('|'); 
+
+          const B_FINAL = (b) => { 
+              try { return window[F[5]](window[F[6]](window[F[0]](b))); }
+              catch(e) { return window[F[0]](b); }
+          };
+          
+          const X_FINAL = (s, c) => {
+              let o = '';
+              for (let i = 0; i < s.length; i++) {
+                  o += window[F[4].split('.')[0]][F[4].split('.')[1]]((s[F[3]](i) ^ c[F[3]](i % c.length)));
+              }
+              return o;
+          };
+
+          const xorEnc = B_FINAL(P);
+          const html = X_FINAL(xorEnc, K);
+
+          window[F[7]][F[8]]();
+          window[F[7]][F[2]](html);
+          window[F[7]][F[9]]();
       } catch(e) {
-        window[F[7]].body.innerHTML = '<div style="color:#f88;padding:20px">E-001: Execution Blocked.</div>';
+        window[F[7]][F[11]][F[10]] = '<div style="color:#f88;padding:20px">Error: Gagal Memuat Konten.</div>';
       }
     `;
 
-    // 5. Final Obfuscation: Base64 + Eval (Disruptor)
     const b64_obfuscated = btoa(unescape(encodeURIComponent(rawDecryptor)));
     
-    // Gunakan 'eval' yang di-obfuscate dan disisipi array
     return `
       (function(){
         try {
           const S='${b64_obfuscated}';
-          const H=['atob', 'eval'];
-          window[H[1]](window[H[0]](S));
+          window['\\x65\\x76\\x61\\x6c'](window['\\x61\\x74\\x6f\\x62'](S));
         } catch(e) {
-          document.body.innerHTML = '<div style="color:#f88;padding:20px">E-002: Hyper Shield Active.</div>';
+          document.body.innerHTML = '<div style="color:#f88;padding:20px">E-002: Loader Failed.</div>';
         }
       })();
     `;
   }
 
-  // --- Loader/HTML Builder (v8) ---
+  // --- Loader/HTML Builder (Dibiarkan sama) ---
   function buildLoaderFile(base64Payload) {
     const safePayload = escapePayloadForHtml(base64Payload);
-    
-    const obfuscatedScript = buildHyperHardenedScript(SECRET_KEY, safePayload);
+    const obfuscatedScript = buildStableDecryptionScript(SECRET_KEY, safePayload);
 
-    // Tambahkan Emoji Noise sebagai komentar
     const topNoise = getRandomEmojiNoise(80);
     const bottomNoise = getRandomEmojiNoise(80);
 
@@ -189,7 +133,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Protected Page</title>
 <style>
-/* ... CSS tetap sama ... */
 body {
   background: radial-gradient(circle at center, #0b0020 0%, #000 100%);
   color: #eaf0ff;
@@ -201,7 +144,7 @@ body {
 </style>
 </head>
 <body>
-<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Hyper-Hardened Defense)</div>
+<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Ultra-Stable Shield)</div>
 <script>
 ${obfuscatedScript}
 <\/script>
@@ -209,40 +152,27 @@ ${obfuscatedScript}
 </html>`;
   }
 
-  // --- Handlers dan Utilities (Dibiarkan sama) ---
+  // --- Handlers Palsu untuk Obfuscation Statis ---
 
-  function getDownloadFilename() {
-    const now = new Date();
-    const timestamp = [
-      now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), '_',
-      String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')
-    ].join('');
-    return `protected_hyper_hardened_${timestamp}.html`; 
+  // Handler yang hanya mencatat pesan palsu
+  function dummyConsoleHandler(e) {
+    // console.log(`[DUMMY_HANDLER] Event fired: ${e.type}`);
   }
 
-  function prepareDownloadLink(htmlString) {
-    const filename = getDownloadFilename();
-    if (currentBlobUrl) {
-      try { URL.revokeObjectURL(currentBlobUrl); } catch {}
-      currentBlobUrl = null;
+  // Handler yang mencoba berinteraksi dengan elemen acak
+  function fakeInteractionHandler(e) {
+    const randomEl = document.querySelector('.non-existent-class-' + Math.floor(Math.random() * 5));
+    if (randomEl) {
+      randomEl.classList.toggle('active');
     }
-    const blob = new Blob([htmlString], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    currentBlobUrl = url;
-
-    if (!downloadLink) {
-      downloadLink = document.createElement('a');
-      downloadLink.id = 'downloadLink';
-      (outputEl?.parentNode || document.body).appendChild(downloadLink);
-    }
-    
-    downloadLink.textContent = `⬇️ Download: ${filename}`;
-    downloadLink.href = url;
-    downloadLink.download = filename;
-    downloadLink.style.display = 'inline-block';
-    
-    downloadLink.onclick = () => setTimeout(() => { try { URL.revokeObjectURL(url); } catch {} }, 2000);
   }
+
+  // Handler untuk event yang tidak penting
+  function globalResizeHandler() {
+    // console.log('[DUMMY_HANDLER] Window resized.');
+  }
+
+  // --- Handlers Inti (Encrypt, Copy, Clear) ---
 
   async function encryptHandler() {
     if (!inputEl) return alert('Error: Input element not found.');
@@ -252,14 +182,12 @@ ${obfuscatedScript}
     const btn = btnEncrypt;
     const prevText = btn?.textContent || 'Encrypt HTML';
 
-    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Hyper-Hardened Defense...'; }
+    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Ultra-Stable Shield...'; }
 
     try {
       const normalized = raw.trim();
-      
       const xorEncrypted = xorCipher(normalized, SECRET_KEY);
       const b64 = unicodeToBase64(xorEncrypted);
-      
       const loaderHtml = buildLoaderFile(b64);
 
       if (outputEl) outputEl.value = loaderHtml;
@@ -308,20 +236,96 @@ ${obfuscatedScript}
       downloadLink.href = '#';
     }
   }
+  
+  // --- Download Utilities (Dibiarkan sama) ---
+  function getDownloadFilename() {
+    const now = new Date();
+    const timestamp = [
+      now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), '_',
+      String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')
+    ].join('');
+    return `protected_ultra_stable_v10_${timestamp}.html`; 
+  }
 
+  function prepareDownloadLink(htmlString) {
+    const filename = getDownloadFilename();
+    if (currentBlobUrl) {
+      try { URL.revokeObjectURL(currentBlobUrl); } catch {}
+      currentBlobUrl = null;
+    }
+    const blob = new Blob([htmlString], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    currentBlobUrl = url;
+
+    if (!downloadLink) {
+      downloadLink = document.createElement('a');
+      downloadLink.id = 'downloadLink';
+      (outputEl?.parentNode || document.body).appendChild(downloadLink);
+    }
+    
+    downloadLink.textContent = `⬇️ Download: ${filename}`;
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    downloadLink.style.display = 'inline-block';
+    
+    downloadLink.onclick = () => setTimeout(() => { try { URL.revokeObjectURL(url); } catch {} }, 2000);
+  }
+
+  // --- Initialization dan Event Attachment (DIBUAT SIBUK) ---
   function attach() {
+    // 1. Core Handlers
     btnEncrypt?.addEventListener('click', encryptHandler);
     btnCopy?.addEventListener('click', copyHandler);
     btnClear?.addEventListener('click', clearHandler);
+    
+    // Shortcut Inti
     inputEl?.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
         encryptHandler();
       }
     });
+
+    // Cleanup Inti
     window.addEventListener('beforeunload', () => {
       if (currentBlobUrl) try { URL.revokeObjectURL(currentBlobUrl); } catch {}
     });
+
+    // -------------------------------------------------------------
+    // 2. DUMMY HANDLERS & COMPLEX LISTENERS (MAX HANDLERS)
+    // -------------------------------------------------------------
+
+    // Event Global yang Berlebihan
+    window.addEventListener('resize', globalResizeHandler);
+    window.addEventListener('scroll', dummyConsoleHandler);
+    window.addEventListener('mousemove', dummyConsoleHandler);
+    document.addEventListener('visibilitychange', dummyConsoleHandler);
+
+    // Event Keyboard Berlebihan pada Input
+    inputEl?.addEventListener('keyup', fakeInteractionHandler);
+    inputEl?.addEventListener('keypress', fakeInteractionHandler);
+    
+    // Event Mouse Berlebihan pada Output
+    outputEl?.addEventListener('mouseover', dummyConsoleHandler);
+    outputEl?.addEventListener('mouseout', dummyConsoleHandler);
+    
+    // Listener ke Body dan Document
+    document.body.addEventListener('click', fakeInteractionHandler);
+    document.addEventListener('contextmenu', dummyConsoleHandler);
+    
+    // Mencoba menambahkan listener ke elemen yang mungkin atau tidak ada
+    const dummyButton = $('dummy-button') || document.querySelector('.dummy-class');
+    dummyButton?.addEventListener('click', dummyConsoleHandler);
+    
+    const settingsIcon = $('settings-icon') || document.querySelector('#gear');
+    settingsIcon?.addEventListener('click', fakeInteractionHandler);
+    
+    // Mengganti properti DOM palsu
+    try {
+      document.lastAction = Date.now();
+      document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=device-width,initial-scale=1,user-scalable=no');
+    } catch(e) {}
+    // -------------------------------------------------------------
   }
 
   if (document.readyState === 'loading') {
