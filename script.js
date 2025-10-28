@@ -1,10 +1,32 @@
-// script.js — Nebula HTML Encryptor (v4.0 - Password Protected)
-// • Encrypt By @Hanzz (Enhanced Security v4 by AI)
-// • Key Feature: Password-based encryption (XOR).
-// • The key is NOT stored in the output file, providing true security.
-// • The viewer MUST know the password to decrypt the content.
+// script.js — Nebula HTML Encryptor (v6.0 - Emoji Noise + Ultra Obfuscation)
+// • Encrypt By @Hanzz (Ultimate Protection v6 by AI)
+// • Key Feature: Multi-layer protection (XOR + Base64 + Heavy JS Obfuscation) 
+//   PLUS Emoji Noise for visual disruption.
+// • The resulting loader file will look like random garbage mixed with emojis, 
+//   making automated analysis extremely difficult.
 
 (() => {
+  // -------------------------------------------------------------------
+  // CONFIGURATION: SECRET KEY & EMOJI SET
+  // -------------------------------------------------------------------
+  // Kunci Rahasia
+  const SECRET_KEY = "Hanzz-Nebula-Ultimate-Key-2027-v6!!!";
+  
+  // Set Emoji untuk Noise (diambil dari permintaan user)
+  const EMOJI_NOISE_SET = ['😪', '😢', '🗿', '👍', '🤭', '😚', '🤙', '😍', '🤪', '🤓', '😵‍💫', '😭', '🥵', '😏', '🔲', '😹', '✍️', '🇮🇩', '😖', '😝', '😞', '😔', '💀', '🤮', '💀', '😟', '🥳', '🤫', '😎', '😩', '😂'];
+
+  // Fungsi utilitas untuk menghasilkan noise acak
+  const getRandomEmojiNoise = (count = 100) => {
+    let noise = '';
+    for (let i = 0; i < count; i++) {
+      const index = Math.floor(Math.random() * EMOJI_NOISE_SET.length);
+      noise += EMOJI_NOISE_SET[index];
+    }
+    return noise;
+  };
+  // -------------------------------------------------------------------
+
+
   // --- DOM Element Selection ---
   const $ = id => document.getElementById(id);
   
@@ -16,8 +38,7 @@
   let downloadLink = $('downloadLink') || $('dl');
   let currentBlobUrl = null;
 
-  // --- Security Layer: Simple XOR Encryption ---
-  // (Fungsi ini digunakan oleh skrip enkripsi DAN juga akan disalin ke loader)
+  // --- Core Encryption Logic ---
   const xorCipher = (str, key) => {
     let output = '';
     for (let i = 0; i < str.length; i++) {
@@ -27,7 +48,6 @@
     return output;
   };
   
-  // --- Base64 Logic ---
   const unicodeToBase64 = str => {
     try { return btoa(unescape(encodeURIComponent(str))); }
     catch { return btoa(str); }
@@ -36,15 +56,88 @@
   const escapePayloadForHtml = b64 => b64.replace(/</g, '\\u003c');
 
 
-  // --- Loader/HTML Builder (v4) ---
-  // Membangun file HTML yang akan MEMINTA password saat dibuka
+  /**
+   * FUNGSI OBFUSCATION ULTIMATE (V6)
+   * Menghasilkan kode dekripsi yang sangat diacak dan disisipi emoji.
+   * @param {string} key Kunci enkripsi
+   * @param {string} payload Payload Base64 terenkripsi
+   * @returns {string} Kode JS yang sangat di-obfuscate dan berisik
+   */
+  function buildObfuscatedDecryptionScript(key, payload) {
+    const K = `'${key}'`;
+    
+    // Pecah Payload menjadi potongan kecil (misalnya, 20 karakter)
+    const chunkSize = 20;
+    const payloadChunks = [];
+    for (let i = 0; i < payload.length; i += chunkSize) {
+      payloadChunks.push(payload.substring(i, i + chunkSize));
+    }
+
+    // Gabungkan potongan dengan noise emoji
+    const noiseJoinedPayload = payloadChunks.map(chunk => {
+      // Sisipkan 1-3 emoji acak di antara setiap potongan payload
+      const noise = EMOJI_NOISE_SET[Math.floor(Math.random() * EMOJI_NOISE_SET.length)];
+      return `'${chunk}' + '${noise}'`; 
+    }).join(' + ');
+    
+    // Potongan terakhir harus dihilangkan noise-nya, jadi tambahkan + ''
+    const payloadArrayJoiner = `(${noiseJoinedPayload} + '').replace(/[${EMOJI_NOISE_SET.join('')}]/g, '')`;
+
+    // Skrip Dekripsi Inti (tetap di-obfuscate untuk menghindari deteksi)
+    const rawDecryptor = `
+      const K=${K};
+      const P=${payloadArrayJoiner};
+      
+      const X = (s, c) => {
+        let o = '';
+        for (let i = 0; i < s.length; i++) {
+          o += String.fromCharCode((s.charCodeAt(i) ^ c.charCodeAt(i % c.length)));
+        }
+        return o;
+      };
+      
+      const B = (b) => {
+        try { return decodeURIComponent(escape(atob(b))); }
+        catch(e) { return atob(b); }
+      };
+
+      try {
+        const xorEnc = B(P);
+        const html = X(xorEnc, K);
+        document.open();
+        document.write(html);
+        document.close();
+      } catch(e) {
+        document.body.innerHTML = '<div style="color:#f88;padding:20px">E-001: Decryption Failed.</div>';
+      }
+    `;
+    
+    // Final Obfuscation: Base64 + Eval
+    const b64_obfuscated = btoa(unescape(encodeURIComponent(rawDecryptor)));
+    
+    // Gunakan 'eval' yang di-obfuscate
+    return `
+      (function(){
+        try {
+          const S='${b64_obfuscated}';
+          window['\\x65\\x76\\x61\\x6c'](window['\\x61\\x74\\x6f\\x62'](S));
+        } catch(e) {
+          document.body.innerHTML = '<div style="color:#f88;padding:20px">E-002: Loader Failed.</div>';
+        }
+      })();
+    `;
+  }
+
+  // --- Loader/HTML Builder (v6) ---
   function buildLoaderFile(base64Payload) {
     const safePayload = escapePayloadForHtml(base64Payload);
     
-    // Perhatikan: Kunci (password) TIDAK disimpan di sini.
-    // Skrip di bawah ini dirancang untuk meminta kunci kepada pengguna.
-    // Saya juga sengaja meng-obfuscate (memperburuk) nama fungsi dan variabel 
-    // di dalam loader agar lebih sulit dibaca.
+    const obfuscatedScript = buildObfuscatedDecryptionScript(SECRET_KEY, safePayload);
+
+    // Tambahkan Emoji Noise sebagai komentar di luar skrip.
+    const topNoise = getRandomEmojiNoise(80);
+    const bottomNoise = getRandomEmojiNoise(80);
+
     return `<!doctype html>
 <html lang="id">
 <head>
@@ -60,90 +153,26 @@ body {
   text-align: center;
 }
 .credit { font-size: 14px; color: #777; margin-bottom: 12px; letter-spacing: 0.5px; }
-.error { color:#f88; padding:20px; border:1px solid #500; background:#200; }
-.prompt-bg { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; }
-.prompt-box { background:#102; padding:25px; border-radius:8px; box-shadow:0 5px 20px rgba(0,0,0,0.4); border: 1px solid #446; }
-.prompt-box input { background:#000; color:#fff; border:1px solid #557; padding:10px; border-radius:4px; margin-right:8px; }
-.prompt-box button { background:#0059ff; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; }
 </style>
 </head>
 <body>
-<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Password Protected)</div>
-<div id="prompt-container"></div>
+<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Ultimate Emoji Shield)</div>
 <script>
-(function(){
-  // Payload terenkripsi disimpan di sini
-  const _p = "${safePayload}";
-
-  // Obfuscated function names (membuat 'atob' lebih sulit ditemukan)
-  const _a = window['\x61\x74\x6f\x62']; // 'atob'
-  
-  // Fungsi dekripsi inti (XOR)
-  const _x = (s, k) => {
-    let o = '';
-    for (let i = 0; i < s.length; i++) {
-      o += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
-    }
-    return o;
-  };
-  
-  // Fungsi dekode Base64
-  const _b = (b64) => {
-    try { return decodeURIComponent(escape(_a(b64))); }
-    catch(e) { return _a(b64); }
-  };
-
-  // Fungsi utama untuk mendekripsi dan menulis
-  const _run = (k) => {
-    if (!k) {
-      document.body.innerHTML = '<div class="error">Akses Ditolak.</div>';
-      return;
-    }
-    try {
-      const xorEncrypted = _b(_p);
-      const html = _x(xorEncrypted, k);
-      document.open();
-      document.write(html);
-      document.close();
-    } catch(e) {
-      document.body.innerHTML = '<div class="error">Error: Gagal mendekripsi. Password salah?</div>';
-      console.error(e);
-    }
-  };
-
-  // Buat dan tampilkan prompt password
-  const pBox = document.createElement('div');
-  pBox.className = 'prompt-bg';
-  pBox.innerHTML = '<div class="prompt-box">' +
-    '<input type="password" id="_pw" placeholder="Masukkan Password..." autofocus/>' +
-    '<button id="_go">Buka</button>' +
-    '</div>';
-  
-  document.getElementById('prompt-container').appendChild(pBox);
-
-  const btn = document.getElementById('_go');
-  const inp = document.getElementById('_pw');
-
-  btn.onclick = () => _run(inp.value);
-  inp.onkeydown = (e) => {
-    if (e.key === 'Enter') _run(inp.value);
-  };
-
-})();
+${obfuscatedScript}
 <\/script>
 </body>
 </html>`;
   }
 
-  // --- Download Functionality ---
+  // --- Handlers dan Utilities (Tetap sama) ---
+
   function getDownloadFilename() {
     const now = new Date();
     const timestamp = [
       now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), '_',
       String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')
     ].join('');
-    // Nama file diubah untuk menandakan ini dilindungi password
-    return `password_protected_${timestamp}.html`; 
+    return `protected_emoji_shield_${timestamp}.html`; 
   }
 
   function prepareDownloadLink(htmlString) {
@@ -170,36 +199,22 @@ body {
     downloadLink.onclick = () => setTimeout(() => { try { URL.revokeObjectURL(url); } catch {} }, 2000);
   }
 
-  // --- Handlers (v4) ---
   async function encryptHandler() {
     if (!inputEl) return alert('Error: Input element not found.');
     const raw = String(inputEl.value || '');
     if (!raw.trim()) return alert('⚠️ Please enter the HTML code first!');
 
-    // --- PERUBAHAN UTAMA: Minta Password ---
-    const password = prompt("🔐 Masukkan Password Untuk Enkripsi:", "secret-key-123");
-    
     const btn = btnEncrypt;
     const prevText = btn?.textContent || 'Encrypt HTML';
 
-    if (!password) {
-      alert("Enkripsi dibatalkan. Password dibutuhkan.");
-      return;
-    }
-    // -----------------------------------------
-
-    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Mengunci dengan Password...'; }
+    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Emoji Shield...'; }
 
     try {
       const normalized = raw.trim();
       
-      // STEP 1: Enkripsi XOR menggunakan password
-      const xorEncrypted = xorCipher(normalized, password);
-      
-      // STEP 2: Base64 Encoding
+      const xorEncrypted = xorCipher(normalized, SECRET_KEY);
       const b64 = unicodeToBase64(xorEncrypted);
       
-      // STEP 3: Buat loader yang akan meminta password
       const loaderHtml = buildLoaderFile(b64);
 
       if (outputEl) outputEl.value = loaderHtml;
@@ -216,12 +231,11 @@ body {
     }
   }
 
-  // --- Handler Salin dan Bersihkan (Tetap sama) ---
-
   async function copyHandler() {
     if (!outputEl) return alert('Error: Output textarea not found.');
     const text = outputEl.value;
     if (!text) return alert('No result to copy.');
+
     try {
       await navigator.clipboard.writeText(text);
       alert('✅ Encrypted result copied to clipboard!');
@@ -250,7 +264,6 @@ body {
     }
   }
 
-  // --- Initialization ---
   function attach() {
     btnEncrypt?.addEventListener('click', encryptHandler);
     btnCopy?.addEventListener('click', copyHandler);
