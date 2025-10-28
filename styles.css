@@ -1,3 +1,5 @@
+/* style.css (Updated) */
+
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap');
 
 * {
@@ -29,8 +31,22 @@ main {
 h1 {
   font-family: 'Orbitron', sans-serif;
   font-size: 2.2rem;
-  text-shadow: 0 0 10px #a855f7, 0 0 25px #9333ea, 0 0 40px #6b21a8;
+  /* Efek glow yang lebih halus */
+  text-shadow: 0 0 10px #a855f7, 0 0 25px #9333ea, 0 0 40px #6b21a8; 
   margin-bottom: 20px;
+}
+
+/* Garis pemisah dengan glow */
+hr.nebula-divider {
+    border: none;
+    height: 1px;
+    background-color: transparent;
+    box-shadow: 0 0 8px #9333ea;
+    margin: 25px 0;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.7;
 }
 
 textarea {
@@ -80,6 +96,13 @@ footer {
 
 footer .author {
   color: #a855f7;
+  transition: text-shadow 0.3s ease;
+}
+
+/* Efek glow saat hover pada penulis footer */
+footer:hover .author {
+    text-shadow: 0 0 5px #a855f7;
+    opacity: 1;
 }
 
 /* Nebula Effects */
@@ -98,6 +121,7 @@ footer .author {
   animation: float 20s infinite ease-in-out;
 }
 
+/* Partikel Awal */
 .p1 {
   width: 150px;
   height: 150px;
@@ -123,6 +147,27 @@ footer .author {
   left: 30%;
   background: #9333ea;
   animation-delay: 5s;
+}
+
+/* Partikel Tambahan */
+.p4 {
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  right: 15%;
+  background: #7e22ce;
+  animation-delay: 8s;
+  animation-duration: 25s; /* Kecepatan lebih lambat */
+}
+
+.p5 {
+  width: 250px;
+  height: 250px;
+  top: -5%;
+  right: 35%;
+  background: #a855f7;
+  animation-delay: 12s;
+  animation-duration: 18s; /* Kecepatan sedikit berbeda */
 }
 
 @keyframes float {
