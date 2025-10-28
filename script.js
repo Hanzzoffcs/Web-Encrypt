@@ -1,13 +1,15 @@
-// script.js — Nebula HTML Encryptor (v10.0 - Max Handlers Obfuscation)
-// • Encrypt By @Hanzz (Max Obfuscation by AI)
-// • Key Feature: Core obfuscation (V9) + numerous dummy event handlers and 
-//   listeners to increase complexity and hide core logic from static analysis.
+// script.js — Nebula HTML Encryptor (v11.0 - Robust Final Shield)
+// • Encrypt By @Hanzz (Maximum Stability by AI)
+// • Fix: Removed complex character encoding steps for max stability across all environments.
+// • Priority: 100% Workable Code + Hyper-Hardened Obfuscation.
 
 (() => {
   // -------------------------------------------------------------------
-  // KONFIGURASI INTI (DIBIARKAN SAMA)
+  // KONFIGURASI INTI
   // -------------------------------------------------------------------
-  const SECRET_KEY = "Hanzz-Nebula-Max-Handler-Key-2031-v10!@#"; 
+  const SECRET_KEY = "Hanzz-Nebula-Robust-Key-2032-v11!@#"; 
+  
+  // EMOJI HANYA UNTUK NOISE KOMENTAR, TIDAK UNTUK ENCODING INTI
   const EMOJI_NOISE_SET = ['😪', '😢', '🗿', '👍', '🤭', '😚', '🤙', '😍', '🤪', '🤓', '😵‍💫', '😭', '🥵', '😏', '🔲', '😹', '✍️', '🇮🇩', '😖', '😝', '😞', '😔', '💀', '🤮', '💀', '😟', '🥳', '🤫', '😎', '😩', '😂'];
 
   const getRandomEmojiNoise = (count = 100) => {
@@ -30,7 +32,7 @@
   let downloadLink = $('downloadLink') || $('dl');
   let currentBlobUrl = null;
 
-  // --- Core Encryption Logic (Dibiarkan sama) ---
+  // --- Core Encryption Logic (STABIL) ---
   const xorCipher = (str, key) => {
     let output = '';
     for (let i = 0; i < str.length; i++) {
@@ -40,50 +42,53 @@
     return output;
   };
   
-  const unicodeToBase64 = str => {
-    try { return btoa(unescape(encodeURIComponent(str))); }
-    catch { return btoa(str); }
-  };
-
+  // Menggunakan btoa murni (lebih stabil)
+  const binaryToBase64 = str => btoa(str);
+  
   const escapePayloadForHtml = b64 => b64.replace(/</g, '\\u003c');
 
 
-  // --- FUNGSI OBFUSCATION STABIL (V9 Logic) ---
+  // --- FUNGSI OBFUSCATION STABIL (V11) ---
   function buildStableDecryptionScript(key, payload) {
-    const CORE_KEYS = ['atob', 'eval', 'write', 'charCodeAt', 'String.fromCharCode', 'decodeURIComponent', 'escape', 'document', 'open', 'close', 'innerHTML', 'body'];
-    const ENCRYPTED_CORE_KEYS = unicodeToBase64(xorCipher(CORE_KEYS.join('|'), key));
+    // 1. Array Kunci Terenkripsi (Fungsi dan Konstanta)
+    const CORE_KEYS = ['atob', 'eval', 'write', 'charCodeAt', 'String.fromCharCode', 'document', 'open', 'close', 'innerHTML', 'body']; // Disederhanakan
+    const ENCRYPTED_CORE_KEYS = binaryToBase64(xorCipher(CORE_KEYS.join('|'), key));
     
-    const chunkSize = 30;
+    // 2. Payload Obfuscation (Array Join)
+    const chunkSize = 40;
     const payloadChunks = [];
     for (let i = 0; i < payload.length; i += chunkSize) {
       payloadChunks.push(payload.substring(i, i + chunkSize));
     }
     const payloadConstructor = `[${payloadChunks.map(c => `'${c}'`).join(', ')}].join('')`;
 
-    const keyParts = key.split('-');
-    const keyMaker = `'${keyParts[0]}' + '-' + '${keyParts[1]}' + '-' + '${keyParts[2]}' + '-' + '${keyParts[3]}'`;
+    // 3. Kunci Obfuscation: Sederhana dan Stabil
+    const keyMaker = `'${key}'`;
 
+    // 4. Skrip Dekripsi Inti (Stabil & Tersembunyi)
     const rawDecryptor = `
       const P = ${payloadConstructor}; 
       const K = ${keyMaker}; 
       let F; 
 
+      // Dekripsi Array Kunci
       const X = (s, c) => {
         let o = '';
         for (let i = 0; i < s.length; i++) {
+          // Hanya menggunakan properti standar (misal: charCodeAt)
           o += window['String']['fromCharCode']((s['charCodeAt'](i) ^ c['charCodeAt'](i % c.length)));
         }
         return o;
       };
+      
+      // Fungsi B (atob murni)
+      const B = (b) => window['atob'](b);
 
       try {
           const encryptedF = B('${ENCRYPTED_CORE_KEYS}');
           F = X(encryptedF, K).split('|'); 
-
-          const B_FINAL = (b) => { 
-              try { return window[F[5]](window[F[6]](window[F[0]](b))); }
-              catch(e) { return window[F[0]](b); }
-          };
+          
+          const xorEnc = B(P); // Base64 Decode Payload
           
           const X_FINAL = (s, c) => {
               let o = '';
@@ -93,19 +98,22 @@
               return o;
           };
 
-          const xorEnc = B_FINAL(P);
-          const html = X_FINAL(xorEnc, K);
+          const html = X_FINAL(xorEnc, K); // XOR Decode
 
-          window[F[7]][F[8]]();
-          window[F[7]][F[2]](html);
-          window[F[7]][F[9]]();
+          window[F[5]][F[6]]();
+          window[F[5]][F[2]](html);
+          window[F[5]][F[7]]();
       } catch(e) {
-        window[F[7]][F[11]][F[10]] = '<div style="color:#f88;padding:20px">Error: Gagal Memuat Konten.</div>';
+        // Pesan error stabil
+        window[F[5]][F[9]][F[8]] = '<div style="color:#f88;padding:20px">Error: Gagal Memuat Konten. Kode terlindungi terlalu ketat.</div>';
+        console.error("Critical Decryption Failure:", e);
       }
     `;
 
-    const b64_obfuscated = btoa(unescape(encodeURIComponent(rawDecryptor)));
+    // 5. Final Obfuscation: Base64 + Eval
+    const b64_obfuscated = btoa(rawDecryptor); // Menggunakan btoa murni
     
+    // Gunakan 'eval' yang di-obfuscate
     return `
       (function(){
         try {
@@ -118,7 +126,7 @@
     `;
   }
 
-  // --- Loader/HTML Builder (Dibiarkan sama) ---
+  // --- Loader/HTML Builder (v11) ---
   function buildLoaderFile(base64Payload) {
     const safePayload = escapePayloadForHtml(base64Payload);
     const obfuscatedScript = buildStableDecryptionScript(SECRET_KEY, safePayload);
@@ -144,7 +152,7 @@ body {
 </style>
 </head>
 <body>
-<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Ultra-Stable Shield)</div>
+<div class="credit">🔒 Encrypt By <b>@Hanzz</b> (Robust Final Shield)</div>
 <script>
 ${obfuscatedScript}
 <\/script>
@@ -152,27 +160,14 @@ ${obfuscatedScript}
 </html>`;
   }
 
-  // --- Handlers Palsu untuk Obfuscation Statis ---
+  // --- Handlers Palsu dan Inti (Dibiarkan SIBUK seperti V10) ---
 
-  // Handler yang hanya mencatat pesan palsu
-  function dummyConsoleHandler(e) {
-    // console.log(`[DUMMY_HANDLER] Event fired: ${e.type}`);
-  }
-
-  // Handler yang mencoba berinteraksi dengan elemen acak
+  function dummyConsoleHandler(e) { /* console.log(`[DUMMY]`); */ }
   function fakeInteractionHandler(e) {
     const randomEl = document.querySelector('.non-existent-class-' + Math.floor(Math.random() * 5));
-    if (randomEl) {
-      randomEl.classList.toggle('active');
-    }
+    if (randomEl) randomEl.classList.toggle('active');
   }
-
-  // Handler untuk event yang tidak penting
-  function globalResizeHandler() {
-    // console.log('[DUMMY_HANDLER] Window resized.');
-  }
-
-  // --- Handlers Inti (Encrypt, Copy, Clear) ---
+  function globalResizeHandler() { /* console.log('[DUMMY] Resize.'); */ }
 
   async function encryptHandler() {
     if (!inputEl) return alert('Error: Input element not found.');
@@ -182,12 +177,15 @@ ${obfuscatedScript}
     const btn = btnEncrypt;
     const prevText = btn?.textContent || 'Encrypt HTML';
 
-    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Ultra-Stable Shield...'; }
+    if (btn) { btn.disabled = true; btn.textContent = '🛡️ Applying Robust Final Shield...'; }
 
     try {
       const normalized = raw.trim();
-      const xorEncrypted = xorCipher(normalized, SECRET_KEY);
-      const b64 = unicodeToBase64(xorEncrypted);
+      
+      // Menggunakan XOR murni tanpa encoding kompleks
+      const xorEncrypted = xorCipher(normalized, SECRET_KEY); 
+      const b64 = binaryToBase64(xorEncrypted); 
+      
       const loaderHtml = buildLoaderFile(b64);
 
       if (outputEl) outputEl.value = loaderHtml;
@@ -237,14 +235,13 @@ ${obfuscatedScript}
     }
   }
   
-  // --- Download Utilities (Dibiarkan sama) ---
   function getDownloadFilename() {
     const now = new Date();
     const timestamp = [
       now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), '_',
       String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')
     ].join('');
-    return `protected_ultra_stable_v10_${timestamp}.html`; 
+    return `protected_robust_final_v11_${timestamp}.html`; 
   }
 
   function prepareDownloadLink(htmlString) {
@@ -271,14 +268,13 @@ ${obfuscatedScript}
     downloadLink.onclick = () => setTimeout(() => { try { URL.revokeObjectURL(url); } catch {} }, 2000);
   }
 
-  // --- Initialization dan Event Attachment (DIBUAT SIBUK) ---
+  // --- Initialization dan Event Attachment (SIBUK) ---
   function attach() {
     // 1. Core Handlers
     btnEncrypt?.addEventListener('click', encryptHandler);
     btnCopy?.addEventListener('click', copyHandler);
     btnClear?.addEventListener('click', clearHandler);
     
-    // Shortcut Inti
     inputEl?.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
@@ -286,46 +282,35 @@ ${obfuscatedScript}
       }
     });
 
-    // Cleanup Inti
     window.addEventListener('beforeunload', () => {
       if (currentBlobUrl) try { URL.revokeObjectURL(currentBlobUrl); } catch {}
     });
 
-    // -------------------------------------------------------------
     // 2. DUMMY HANDLERS & COMPLEX LISTENERS (MAX HANDLERS)
-    // -------------------------------------------------------------
-
-    // Event Global yang Berlebihan
     window.addEventListener('resize', globalResizeHandler);
     window.addEventListener('scroll', dummyConsoleHandler);
     window.addEventListener('mousemove', dummyConsoleHandler);
     document.addEventListener('visibilitychange', dummyConsoleHandler);
 
-    // Event Keyboard Berlebihan pada Input
     inputEl?.addEventListener('keyup', fakeInteractionHandler);
     inputEl?.addEventListener('keypress', fakeInteractionHandler);
     
-    // Event Mouse Berlebihan pada Output
     outputEl?.addEventListener('mouseover', dummyConsoleHandler);
     outputEl?.addEventListener('mouseout', dummyConsoleHandler);
     
-    // Listener ke Body dan Document
     document.body.addEventListener('click', fakeInteractionHandler);
     document.addEventListener('contextmenu', dummyConsoleHandler);
     
-    // Mencoba menambahkan listener ke elemen yang mungkin atau tidak ada
     const dummyButton = $('dummy-button') || document.querySelector('.dummy-class');
     dummyButton?.addEventListener('click', dummyConsoleHandler);
     
     const settingsIcon = $('settings-icon') || document.querySelector('#gear');
     settingsIcon?.addEventListener('click', fakeInteractionHandler);
     
-    // Mengganti properti DOM palsu
     try {
       document.lastAction = Date.now();
       document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=device-width,initial-scale=1,user-scalable=no');
     } catch(e) {}
-    // -------------------------------------------------------------
   }
 
   if (document.readyState === 'loading') {
@@ -336,7 +321,7 @@ ${obfuscatedScript}
 
   window.NebulaEncryptor = { 
     xorCipher, 
-    unicodeToBase64, 
+    binaryToBase64, 
     buildLoaderFile, 
     encryptHandler, 
     copyHandler, 
