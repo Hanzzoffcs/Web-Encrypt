@@ -1,4 +1,4 @@
-/* style.css (Updated) */
+/* style.css (Versi 3: Cyberpunk/Hologram Focus) */
 
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap');
 
@@ -9,7 +9,8 @@
 }
 
 body {
-  background: radial-gradient(circle at 20% 20%, #140028, #050009, #000);
+  /* Gradien latar belakang yang lebih gelap untuk kontras yang lebih kuat */
+  background: radial-gradient(circle at 20% 20%, #0d001a, #030005, #000);
   font-family: 'Share Tech Mono', monospace;
   color: #e6e6ff;
   min-height: 100vh;
@@ -25,48 +26,69 @@ main {
   text-align: center;
   width: 90%;
   max-width: 700px;
-  padding: 30px;
+  padding: 35px;
+  border-radius: 15px;
+  /* Efek Backdrop Hologram */
+  background: rgba(20, 0, 40, 0.4); 
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.15); /* Soft outer glow */
+  animation: entrance 1s ease-out;
 }
+
+@keyframes entrance {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 2.2rem;
-  /* Efek glow yang lebih halus */
-  text-shadow: 0 0 10px #a855f7, 0 0 25px #9333ea, 0 0 40px #6b21a8; 
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  /* Efek Glow yang lebih kuat dan animasi flicker */
+  text-shadow: 0 0 15px #a855f7, 0 0 40px #9333ea, 0 0 60px #6b21a8;
+  margin-bottom: 25px;
+  animation: flicker 4s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 100% { text-shadow: 0 0 15px #a855f7, 0 0 40px #9333ea, 0 0 60px #6b21a8; }
+    50% { text-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea, 0 0 30px #6b21a8; opacity: 0.95; }
 }
 
 /* Garis pemisah dengan glow */
 hr.nebula-divider {
     border: none;
-    height: 1px;
-    background-color: transparent;
-    box-shadow: 0 0 8px #9333ea;
-    margin: 25px 0;
-    width: 50%;
+    height: 2px; /* Lebih tebal */
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    box-shadow: 0 0 10px #a855f7;
+    margin: 30px 0;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 textarea {
   width: 100%;
-  background: rgba(20, 20, 40, 0.6);
+  background: rgba(10, 0, 20, 0.7);
   border: 1px solid rgba(168, 85, 247, 0.4);
-  color: #c4b5fd;
-  border-radius: 12px;
-  padding: 12px;
+  color: #00ffc4; /* Warna teks data yang lebih "hacker" */
+  border-radius: 10px;
+  padding: 15px;
   font-size: 0.95rem;
   resize: vertical;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   transition: all 0.3s ease;
   font-family: 'Share Tech Mono', monospace;
+  box-shadow: 0 0 5px rgba(168, 85, 247, 0.3);
 }
 
 textarea:focus {
   outline: none;
-  border-color: #a855f7;
-  box-shadow: 0 0 15px #a855f7;
+  /* Glow Border Interaktif */
+  border-color: #00ffc4;
+  box-shadow: 0 0 20px #00ffc4, inset 0 0 10px rgba(0, 255, 196, 0.2); 
 }
 
 button {
@@ -76,34 +98,68 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  padding: 10px 24px;
-  margin-bottom: 15px;
+  padding: 12px 30px; /* Lebih besar */
+  margin-bottom: 20px;
   transition: all 0.3s ease;
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
 }
 
 button:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 20px #a855f7;
+  filter: brightness(1.25);
+  box-shadow: 0 0 25px #a855f7, 0 0 5px #ff00ff; /* Double glow */
+  transform: translateY(-2px);
 }
 
 footer {
-  font-size: 0.8rem;
-  opacity: 0.6;
+  font-size: 0.85rem;
+  opacity: 0.8;
   margin-top: 1rem;
 }
 
 footer .author {
-  color: #a855f7;
+  color: #ff00ff; /* Warna baru */
   transition: text-shadow 0.3s ease;
 }
 
 /* Efek glow saat hover pada penulis footer */
 footer:hover .author {
-    text-shadow: 0 0 5px #a855f7;
+    text-shadow: 0 0 10px #ff00ff, 0 0 5px #a855f7;
     opacity: 1;
 }
+
+/* Kontainer untuk ikon sosial media */
+.social-links {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Jarak antar ikon lebih besar */
+}
+
+.social-links a {
+    font-size: 2rem; /* Ikon lebih besar */
+    color: #c4b5fd;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+}
+
+/* Warna Hover Khusus untuk Logo Asli */
+.social-links .fa-whatsapp:hover { color: #25D366; text-shadow: 0 0 15px #25D366; }
+.social-links .fa-telegram:hover { color: #0088CC; text-shadow: 0 0 15px #0088CC; }
+.social-links .fa-instagram:hover { 
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none; /* Hilangkan text-shadow agar gradien kelihatan */
+}
+.social-links .fa-youtube:hover { color: #FF0000; text-shadow: 0 0 15px #FF0000; }
+
 
 /* Nebula Effects */
 .nebula {
@@ -116,61 +172,62 @@ footer:hover .author {
 .particle {
   position: absolute;
   border-radius: 50%;
-  filter: blur(8px);
-  opacity: 0.6;
-  animation: float 20s infinite ease-in-out;
+  filter: blur(10px); /* Blur lebih kuat */
+  opacity: 0.5;
+  animation: float 25s infinite ease-in-out; /* Animasi lebih lambat */
 }
 
 /* Partikel Awal */
 .p1 {
-  width: 150px;
-  height: 150px;
-  top: 10%;
+  width: 160px;
+  height: 160px;
+  top: 15%;
   left: 10%;
   background: #7e22ce;
   animation-delay: 0s;
 }
 
 .p2 {
-  width: 200px;
-  height: 200px;
-  bottom: 15%;
-  right: 5%;
+  width: 220px;
+  height: 220px;
+  bottom: 5%;
+  right: 15%;
   background: #a855f7;
   animation-delay: 3s;
+  animation-duration: 30s;
 }
 
 .p3 {
-  width: 120px;
-  height: 120px;
-  bottom: 30%;
-  left: 30%;
+  width: 140px;
+  height: 140px;
+  bottom: 40%;
+  left: 5%;
   background: #9333ea;
   animation-delay: 5s;
 }
 
 /* Partikel Tambahan */
 .p4 {
-  width: 80px;
-  height: 80px;
-  top: 50%;
-  right: 15%;
+  width: 90px;
+  height: 90px;
+  top: 60%;
+  right: 5%;
   background: #7e22ce;
   animation-delay: 8s;
-  animation-duration: 25s; /* Kecepatan lebih lambat */
+  animation-duration: 25s;
 }
 
 .p5 {
-  width: 250px;
-  height: 250px;
-  top: -5%;
-  right: 35%;
+  width: 280px;
+  height: 280px;
+  top: -10%;
+  right: 40%;
   background: #a855f7;
   animation-delay: 12s;
-  animation-duration: 18s; /* Kecepatan sedikit berbeda */
+  animation-duration: 18s;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-40px) translateX(40px); }
+  50% { transform: translateY(-60px) translateX(60px) scale(1.05); }
 }
